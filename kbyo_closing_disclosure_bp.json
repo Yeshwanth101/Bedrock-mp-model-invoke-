@@ -1,0 +1,323 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"description": "This is a closing disclosure document that provides the final loan terms and closing costs for a real estate transaction.",
+	"class": "Closing Disclosure",
+	"type": "object",
+	"definitions": {
+		"BORROWER_DETAILS": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string",
+					"inferenceType": "explicit",
+					"instruction": "The name of the borrower"
+				},
+				"address": {
+					"type": "string",
+					"inferenceType": "explicit",
+					"instruction": "The address of the borrower"
+				}
+			}
+		},
+		"SELLER_DETAILS": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string",
+					"inferenceType": "explicit",
+					"instruction": "The name of the seller"
+				},
+				"address": {
+					"type": "string",
+					"inferenceType": "explicit",
+					"instruction": "The address of the seller"
+				}
+			}
+		},
+		"LENDER_DETAILS": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string",
+					"inferenceType": "explicit",
+					"instruction": "The name of the lender"
+				}
+			}
+		},
+		"PROJECTED_PAYMENTS": {
+			"type": "object",
+			"properties": {
+				"principal_and_interest": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The monthly payment for principal and interest"
+				},
+				"mortgage_insurance": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The monthly mortgage insurance payment"
+				},
+				"estimated_escrow": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The monthly escrow payment for taxes and insurance"
+				},
+				"estimated_total_monthly_payment": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The total estimated monthly payment"
+				}
+			}
+		},
+		"LOAN_COSTS_BREAKDOWN": {
+			"type": "object",
+			"properties": {
+				"origination_charges": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The charges associated with originating the loan"
+				},
+				"services_borrower_did_not_shop_for": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The cost of services the borrower did not shop for"
+				},
+				"services_borrower_did_shop_for": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The cost of services the borrower did shop for"
+				},
+				"total_loan_costs": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The total loan costs paid by the borrower"
+				}
+			}
+		},
+		"OTHER_COSTS_BREAKDOWN": {
+			"type": "object",
+			"properties": {
+				"taxes_and_other_government_fees": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The taxes and government fees paid"
+				},
+				"prepaids": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The prepaid items such as homeowner's insurance and property taxes"
+				},
+				"initial_escrow_payment": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The initial escrow payment made at closing"
+				},
+				"other": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "Other costs such as HOA fees, home inspection, etc."
+				},
+				"total_other_costs": {
+					"type": "number",
+					"inferenceType": "explicit",
+					"instruction": "The total other costs paid by the borrower"
+				}
+			}
+		}
+	},
+	"properties": {
+		"date_issued": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The date the closing disclosure was issued"
+		},
+		"closing_date": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The date the real estate transaction is scheduled to close"
+		},
+		"disbursement_date": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The date the loan funds will be disbursed"
+		},
+		"settlement_agent": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The company responsible for handling the closing and disbursement of funds"
+		},
+		"file_number": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The unique identifier for this real estate transaction"
+		},
+		"property_address": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The address of the property being purchased"
+		},
+		"sale_price": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The agreed upon sale price of the property"
+		},
+		"borrower_details": {
+			"$ref": "#/definitions/BORROWER_DETAILS",
+			"instruction": "-"
+		},
+		"seller_details": {
+			"$ref": "#/definitions/SELLER_DETAILS",
+			"instruction": "-"
+		},
+		"lender_details": {
+			"$ref": "#/definitions/LENDER_DETAILS",
+			"instruction": "-"
+		},
+		"loan_term": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The term length of the loan, e.g. 30 years"
+		},
+		"loan_purpose": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The purpose of the loan, e.g. Purchase"
+		},
+		"loan_product": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The type of loan product, e.g. Fixed Rate"
+		},
+		"loan_type": {
+			"enum": [
+				"CONVENTIONAL",
+				"FHA",
+				"VA",
+				"OTHER"
+			],
+			"instruction": "The type of loan, limited to Conventional, FHA, VA, or Other",
+			"inferenceType": "explicit"
+		},
+		"loan_id": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The unique identifier for this loan"
+		},
+		"mic_number": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The Mortgage Insurance Certificate number"
+		},
+		"loan_amount": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The total amount of the loan"
+		},
+		"interest_rate": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The interest rate on the loan"
+		},
+		"monthly_principal_and_interest": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The monthly payment for principal and interest"
+		},
+		"prepayment_penalty": {
+			"type": "boolean",
+			"inferenceType": "explicit",
+			"instruction": "Whether there is a prepayment penalty on the loan"
+		},
+		"prepayment_penalty_amount": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The amount of the prepayment penalty"
+		},
+		"balloon_payment": {
+			"type": "boolean",
+			"inferenceType": "explicit",
+			"instruction": "Whether the loan has a balloon payment"
+		},
+		"projected_payments": {
+			"$ref": "#/definitions/PROJECTED_PAYMENTS",
+			"instruction": "-"
+		},
+		"estimated_taxes,_insurance_&_assessments": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The estimated monthly amount for taxes, insurance and assessments"
+		},
+		"closing_costs": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The total closing costs for the transaction"
+		},
+		"cash_to_close": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The total amount the borrower needs to bring to closing"
+		},
+		"loan_costs_breakdown": {
+			"$ref": "#/definitions/LOAN_COSTS_BREAKDOWN",
+			"instruction": "-"
+		},
+		"other_costs_breakdown": {
+			"$ref": "#/definitions/OTHER_COSTS_BREAKDOWN",
+			"instruction": "-"
+		},
+		"seller_credits": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The amount of credits provided by the seller"
+		},
+		"other_credits": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The amount of other credits provided"
+		},
+		"borrower_paid_at_closing": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The total amount the borrower paid at closing"
+		},
+		"seller_paid_at_closing": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The total amount the seller paid at closing"
+		},
+		"cash_to_seller": {
+			"type": "number",
+			"inferenceType": "explicit",
+			"instruction": "The net amount paid to the seller at closing"
+		},
+		"loan_assumption": {
+			"type": "boolean",
+			"inferenceType": "explicit",
+			"instruction": "Whether the loan can be assumed by a new buyer"
+		},
+		"demand_feature": {
+			"type": "boolean",
+			"inferenceType": "explicit",
+			"instruction": "Whether the loan has a demand feature"
+		},
+		"late_payment_fee": {
+			"type": "string",
+			"inferenceType": "explicit",
+			"instruction": "The late payment fee charged by the lender"
+		},
+		"negative_amortization": {
+			"type": "boolean",
+			"inferenceType": "explicit",
+			"instruction": "Whether the loan has a negative amortization feature"
+		},
+		"partial_payments": {
+			"enum": [
+				"ACCEPTED",
+				"HELD",
+				"NOT_ACCEPTED"
+			],
+			"instruction": "Whether the lender accepts partial payments, holds them, or does not accept them",
+			"inferenceType": "explicit"
+		}
+	}
+}
