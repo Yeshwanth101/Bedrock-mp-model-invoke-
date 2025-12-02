@@ -1,0 +1,102 @@
+1. S3 Permissions for Private Hub Creation
+Admins need S3 permissions to access the JumpStart cache bucket AWS:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetObject",
+        "s3:GetObjectTagging"
+      ],
+      "Resource": [
+        "arn:aws:s3:::jumpstart-cache-prod-<REGION>",
+        "arn:aws:s3:::jumpstart-cache-prod-<REGION>/*"
+      ]
+    }
+  ]
+}
+
+2. SageMaker Hub Management Permissions
+Admins need permissions to:
+
+Create, describe, update, and delete hubs
+Add and manage hub content (models)
+Import models from the public hub to the private hub
+
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sagemaker:CreateHub",
+        "sagemaker:DescribeHub",
+        "sagemaker:UpdateHub",
+        "sagemaker:DeleteHub",
+        "sagemaker:ListHubs",
+        "sagemaker:CreateHubContentReference",
+        "sagemaker:DescribeHubContent",
+        "sagemaker:ListHubContents",
+        "sagemaker:DeleteHubContent"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+
+
+User Permissions (to block public hub access)
+Users need explicit deny policies to prevent access to the public SageMaker JumpStart hub HKU SPACE
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Deny",
+      "Action": "s3:*",
+      "Resource": [
+        "arn:aws:s3:::jumpstart-cache-prod-<REGION>",
+        "arn:aws:s3:::jumpstart-cache-prod-<REGION>/*"
+      ],
+      "Condition": {
+        "StringNotLike": {
+          "s3:prefix": ["*.ipynb", "*/eula.txt"]
+        }
+      }
+    },
+    {
+      "Effect": "Deny",
+      "Action": "sagemaker:*",
+      "Resource": [
+        "arn:aws:sagemaker:<REGION>:aws:hub/SageMakerPublicHub",
+        "arn:aws:sagemaker:<REGION>:aws:hub-content/SageMakerPublicHub/*/*"
+      ]
+    }
+  ]
+}
+Allow Access to Private Hub Only
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sagemaker:DescribeHub",
+        "sagemaker:DescribeHubContent",
+        "sagemaker:ListHubContents",
+        "sagemaker:CreateModel",
+        "sagemaker:CreateEndpoint",
+        "sagemaker:CreateEndpointConfig"
+      ],
+      "Resource": [
+        "arn:aws:sagemaker:<REGION>:<ACCOUNT_ID>:hub/<YOUR-PRIVATE-HUB-NAME>",
+        "arn:aws:sagemaker:<REGION>:<ACCOUNT_ID>:hub-content/<YOUR-PRIVATE-HUB-NAME>/*/*"
+      ]
+    }
+  ]
+}
+
